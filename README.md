@@ -1,6 +1,6 @@
 # ⚔ D2R Command Center
 
-**A dark, gothic, button-driven companion UI for [Shupershuff's Diablo2RLoader](https://github.com/shupershuff/Diablo2RLoader).**
+**A button-driven companion UI for [Shupershuff's Diablo2RLoader](https://github.com/shupershuff/Diablo2RLoader).**
 
 > ### 🛡 Shupershuff's loader is left 100% intact.
 > This project is a **front-end only**. It does not fork, patch, rewrite, wrap,
