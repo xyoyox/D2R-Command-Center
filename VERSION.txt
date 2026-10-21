@@ -1,0 +1,45 @@
+D2R Command Center
+==================
+
+Installed version: 2.6
+
+You can also see the live version inside the app:
+the sidebar footer shows "UI v2.6" and "Bridge v2.6".
+If those do not match, run Update-D2R-Command-Center.bat.
+
+What's new in 2.6
+-----------------
+- MOVED: the Terror Zone and DClone live status now sit directly under
+  the "Command Log" button in the left sidebar, instead of being pushed
+  to the bottom of the sidebar. Their drop-downs open downward.
+- CHANGED: the "Rp_Casanova - YOYO Crescendo" credit is now a full-width
+  pill that spans the sidebar, with a larger font that scales to fit.
+  Its socials/tip drop-down matches the pill width.
+- REORDERED: on "Launch & Presets", Presets now comes first, followed by
+  Batch Launch and then Batch Load Order.
+- FIXED: in Configuration, the Playtime Tracking and Terror Zones cards
+  no longer leave big uneven gaps. The cards now pack tightly into two
+  balanced columns, so every card lines up uniformly.
+
+Folder layout (2.6)
+-------------------
+  app\        the actual program (server.js, app.js, index.html, ...)
+  scripts\    helper scripts (PowerShell + VBS) the .bat files call
+  docs\       technical README.md
+  assets\     icons (d2r.ico, d2r.png)
+  data\       bundled reference data (levels.txt) + sample files
+  *.bat       the five launchers above
+
+Carried over
+------------
+- 2.5: desktop icon no longer needs 3-4 clicks, shortcut replaced on
+       update, Batch Load Order panel, full GitHub write-up.
+- 2.4: fixed game launching, drag & drop manual launch order, window size
+       and position memory, sidebar Live Status drop-downs, Accounts table
+       cleanup (collapsible password, bigger Label, no Command Line args).
+- 2.3: working Live Status (Terror Zones + DClone), working Terror Zones
+       config panel, US preset, cleaner folder layout, loader-window icon.
+- 2.2: launch queue (one loader at a time), live game detection,
+       Refresh button.
+- 2.1: flat zip + one-click updater (Update-D2R-Command-Center.bat).
+- 2.0: Rp_Casanova drop-down, smaller brand text, icon logo.

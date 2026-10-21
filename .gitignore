@@ -1,0 +1,29 @@
+# dependencies
+app/node_modules/
+node_modules/
+
+# user-specific config (paths to YOUR loader / accounts)
+bridge.config.json
+
+# generated
+bridge.log
+*.log
+app/package-lock.json
+
+# backups created by the batch-order feature
+Accounts.csv.bak
+*.bak
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# editors
+.vscode/
+.idea/
+*.swp
+
+# build output
+*.zip
+dist/

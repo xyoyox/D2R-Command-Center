@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>D2R Command Center — Companion UI for Shupershuff's D2R Loader</title>
+<meta name="description" content="A beautiful, button-driven companion UI for Shupershuff's Diablo2RLoader. Preserves his engine exactly — just a nicer face on it." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="assets/d2r.png" />
+<link rel="apple-touch-icon" href="assets/d2r.png" />
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+<!-- Shared gold gradient used by the custom nav icons (styled after the app icon) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6dd8b"/>
+      <stop offset="0.45" stop-color="#d9b24a"/>
+      <stop offset="1" stop-color="#9c7520"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+
+<!-- ===================== APP SHELL ===================== -->
+<div class="app">
+
+  <!-- ---------- SIDEBAR ---------- -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><img src="assets/d2r.png" alt="D2R Command Center" width="46" height="46" /></div>
+      <div class="brand-text">
+        <h1>D2R<span>Command Center</span></h1>
+        <p>A companion UI for Shupershuff's Loader</p>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Collapse sidebar" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6 L8.5 12 L14.5 18"/></svg>
+      </button>
+    </div>
+
+
+    <!-- full-width credit pill (v2.6) -->
+    <div class="brand-credit">
+      <span class="bc-made">made with <span class="bc-heart">&#10084;</span> by</span>
+      <span class="bc-dd">
+        <button type="button" class="bc-toggle" id="bcToggle" aria-haspopup="true" aria-expanded="false" title="Socials &amp; tip">
+          <b>Rp_Casanova</b><em>"YOYO Crescendo"</em>
+          <svg class="bc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9 L12 15 L18 9"/></svg>
+        </button>
+        <span class="bc-menu" id="bcMenu" role="menu" hidden>
+          <a role="menuitem" href="https://www.twitch.tv/rp_casanova" target="_blank" rel="noopener" title="Twitch &mdash; rp_casanova"><span class="bc-ico">&#128250;</span>Twitch</a>
+          <a role="menuitem" href="https://www.youtube.com/@YOYOCrescendo" target="_blank" rel="noopener" title="YouTube &mdash; YOYO Crescendo"><span class="bc-ico">&#9654;</span>YouTube</a>
+          <a role="menuitem" class="bc-tip" href="https://streamlabs.com/rp_casanova1/tip" target="_blank" rel="noopener" title="Tip Rp_Casanova"><span class="bc-ico">&#127873;</span>Tip</a>
+        </span>
+      </span>
+    </div>
+
+    <nav class="nav" id="nav">
+      <button class="nav-item active" data-view="instances" title="Instances">
+        <span class="nav-ico"><svg viewBox="0 0 24 24" stroke="url(#goldGrad)" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 2.4 L19.2 5 V10.4 C19.2 15.3 16.1 18.8 12 20.4 C7.9 18.8 4.8 15.3 4.8 10.4 V5 Z"/><path d="M12 6.6 L15.8 8 V10.6 C15.8 13.3 14.2 15.3 12 16.2 C9.8 15.3 8.2 13.3 8.2 10.6 V8 Z"/></svg></span><span class="nav-label">Instances</span>
+        <span class="nav-badge" id="navBadgeOpen">0</span>
+      </button>
+      <button class="nav-item" data-view="launch" title="Launch & Presets">
+        <span class="nav-ico"><svg viewBox="0 0 24 24" stroke="url(#goldGrad)" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 2.6 L20.2 7.3 V16.7 L12 21.4 L3.8 16.7 V7.3 Z"/><path d="M10 8.4 L16.2 12 L10 15.6 Z" fill="url(#goldGrad)" stroke="none"/></svg></span><span class="nav-label">Launch & Presets</span>
+      </button>
+      <button class="nav-item" data-view="config" title="Configuration">
+        <span class="nav-ico"><svg viewBox="0 0 24 24" stroke="url(#goldGrad)" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M10.7 3.2 h2.6 l.5 2.1 1.9.8 1.8-1.2 1.8 1.8-1.2 1.8 .8 1.9 2.1 .5 v2.6 l-2.1 .5-.8 1.9 1.2 1.8-1.8 1.8-1.8-1.2-1.9 .8-.5 2.1 h-2.6 l-.5-2.1-1.9-.8-1.8 1.2-1.8-1.8 1.2-1.8-.8-1.9-2.1-.5 v-2.6 l2.1-.5 .8-1.9-1.2-1.8 1.8-1.8 1.8 1.2 1.9-.8 z"/><circle cx="12" cy="12" r="3.1"/></svg></span><span class="nav-label">Configuration</span>
+      </button>
+      <button class="nav-item" data-view="accounts" title="Accounts">
+        <span class="nav-ico"><svg viewBox="0 0 24 24" stroke="url(#goldGrad)" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3.4 C8.4 3.4 6 6 6 9.7 V15.2 C6 17.4 7.4 19 9.3 19.6 H14.7 C16.6 19 18 17.4 18 15.2 V9.7 C18 6 15.6 3.4 12 3.4 Z"/><path d="M6 10.6 H18"/><path d="M12 3.4 V10.6"/><path d="M12 10.6 V16.6"/><path d="M9 13.9 H10.5 M13.5 13.9 H15"/><path d="M12 3.4 C12.5 2 13.7 1.5 15 1.9"/></svg></span><span class="nav-label">Accounts</span>
+      </button>
+      <button class="nav-item" data-view="console" title="Command Log">
+        <span class="nav-ico"><svg viewBox="0 0 24 24" stroke="url(#goldGrad)" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M8.2 3.8 H17.4 C18.3 3.8 19 4.5 19 5.4 V18.6 C19 19.5 18.3 20.2 17.4 20.2 H8.2"/><path d="M8.2 3.8 C7.1 3.8 6.2 4.7 6.2 5.8 V18.2 C6.2 19.3 7.1 20.2 8.2 20.2"/><path d="M9.6 8 H16 M9.6 11 H16 M9.6 14 H13"/><circle cx="16.2" cy="16.6" r="1.6" fill="url(#goldGrad)" stroke="none"/></svg></span><span class="nav-label">Command Log</span>
+        <span class="nav-badge" id="navBadgeLog">0</span>
+      </button>
+    </nav>
+
+    <!-- SIDEBAR LIVE STATUS (v2.4) — two always-visible dropdowns -->
+    <div class="side-live" id="sideLive">
+      <div class="sl-group">
+        <button type="button" class="sl-head" id="slTzToggle" aria-expanded="false" title="Terror Zone — live">
+          <span class="sl-ico">&#128293;</span>
+          <span class="sl-title">Terror Zone</span>
+          <span class="sl-val" id="slTzVal">&mdash;</span>
+          <svg class="sl-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9 L12 15 L18 9"/></svg>
+        </button>
+        <div class="sl-body" id="slTzBody" hidden>
+          <div class="sl-line"><span class="sl-k">Now</span><span class="sl-v" id="slTzNow">&mdash;</span></div>
+          <div class="sl-line"><span class="sl-k">Next</span><span class="sl-v" id="slTzNext">&mdash;</span></div>
+          <div class="sl-meta" id="slTzMeta"></div>
+        </div>
+      </div>
+      <div class="sl-group">
+        <button type="button" class="sl-head" id="slDcToggle" aria-expanded="false" title="DClone — live">
+          <span class="sl-ico">&#128009;</span>
+          <span class="sl-title">DClone</span>
+          <span class="sl-val" id="slDcVal">&mdash;</span>
+          <svg class="sl-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9 L12 15 L18 9"/></svg>
+        </button>
+        <div class="sl-body" id="slDcBody" hidden>
+          <div class="sl-dc" id="slDcList"><span class="sl-muted">Loading&hellip;</span></div>
+        </div>
+      </div>
+      <div class="sl-region" id="slRegionSeg" title="Live region">
+        <button type="button" class="sl-region-btn active" data-live-region="us">US</button>
+        <button type="button" class="sl-region-btn" data-live-region="eu">EU</button>
+        <button type="button" class="sl-region-btn" data-live-region="kr">KR</button>
+        <button type="button" class="sl-region-btn" data-live-region="cn">CN</button>
+      </div>
+    </div>
+
+    <div class="sidebar-foot">
+      <div class="bridge-status" id="bridgeStatus" title="Local launcher bridge status">
+        <span class="dot"></span>
+        <span class="bridge-text">Command mode</span>
+      </div>
+      <div class="credit">
+        Engine by <a href="https://github.com/shupershuff/Diablo2RLoader" target="_blank" rel="noopener">Shupershuff</a>
+      </div>
+      <div class="ver-line" title="UI version and the bridge version it's talking to">
+        <span class="ver-badge" id="uiVersion">UI v2.6</span>
+        <span class="ver-badge" id="bridgeVersion">Bridge —</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ---------- MAIN ---------- -->
+  <main class="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h2 id="viewTitle">Instances</h2>
+        <p id="viewSub">Your Battle.net accounts, ready to launch.</p>
+      </div>
+
+      <div class="topbar-right">
+        <div class="region-picker" title="Default region (preset) — applied to every launch">
+          <span class="region-label">Default Realm</span>
+          <div class="seg" id="regionSeg">
+            <button data-region="1" class="seg-btn">NA</button>
+            <button data-region="2" class="seg-btn">EU</button>
+            <button data-region="3" class="seg-btn">KR</button>
+          </div>
+        </div>
+
+        <div class="io-group">
+          <button class="btn btn-ghost" id="btnImport" title="Import your real config.xml &amp; Accounts.csv">⬆ Import</button>
+          <button class="btn btn-ghost" id="btnExport" title="Export updated config.xml &amp; Accounts.csv">⬇ Export</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ VIEW: INSTANCES ============ -->
+    <section class="view active" id="view-instances">
+      <div class="setup-banner" id="setupBanner" hidden>
+        <span class="sb-ico">🔌</span>
+        <div class="sb-text">
+          <strong>Loader path not set.</strong> Point the bridge at your <code>D2Loader.ps1</code> so the Launch buttons work.
+        </div>
+        <button class="btn btn-gold btn-sm" id="btnSetupGo">Set it up →</button>
+      </div>
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="search">
+            <span>🔍</span>
+            <input type="text" id="acctSearch" placeholder="Search accounts…" />
+          </div>
+          <div class="chip-row" id="batchFilterRow">
+            <button class="chip active" data-batch="all">All</button>
+            <button class="chip" data-batch="open">Open</button>
+            <button class="chip" data-batch="closed">Available</button>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-ghost privacy-toggle" id="btnToggleEmails" aria-pressed="false" title="Show or hide account emails on this screen">
+            <span class="pt-ico">👁</span><span class="pt-label">Show emails</span>
+          </button>
+          <span class="live-chip off" id="liveChip" title="Live game detection">Live</span>
+          <button class="btn btn-ghost btn-refresh" id="btnRefresh" title="Refresh: re-check which games are open and reload Accounts.csv">
+            <span class="rf-ico">⟳</span><span class="rf-label">Refresh</span>
+          </button>
+          <button class="btn btn-primary" id="btnOpenAll">⚔ Open All Accounts</button>
+        </div>
+      </div>
+
+      <div class="queue-bar" id="queueBar" hidden>
+        <span class="qb-spin"></span>
+        <div class="qb-text" id="queueText"></div>
+        <button class="btn btn-ghost btn-sm" id="btnQueueClear" title="Cancel launches that haven't started yet">Cancel waiting</button>
+      </div>
+
+      <div class="instance-grid" id="instanceGrid"><!-- cards injected --></div>
+      <div class="empty-state" id="instancesEmpty" hidden>
+        <div class="empty-ico">🗡</div>
+        <h3>No accounts match</h3>
+        <p>Try a different search, or add accounts in the <strong>Accounts</strong> tab.</p>
+      </div>
+    </section>
+
+    <!-- ============ VIEW: LAUNCH & PRESETS ============ -->
+    <section class="view" id="view-launch">
+      <div class="panel-grid">
+
+        <!-- PRESETS -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>💾 Presets</h3>
+            <p>Save a realm + account set, reuse it forever.</p>
+          </div>
+          <div class="panel-body">
+            <div class="field">
+              <label>New preset name</label>
+              <div class="row">
+                <input type="text" id="presetName" placeholder="e.g. Baal Runs (4)" />
+                <button class="btn btn-primary" id="btnSavePreset">Save Current</button>
+              </div>
+              <p class="hint">Saves the current realm, selected accounts &amp; batch ID.</p>
+            </div>
+            <div class="preset-list" id="presetList"><!-- presets injected --></div>
+          </div>
+        </div>
+
+
+        <!-- BATCH -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>⚡ Batch Launch</h3>
+            <p>Spin up a group of accounts in one click.</p>
+          </div>
+          <div class="panel-body">
+            <div class="quick-batch" id="quickBatch">
+              <button class="btn btn-batch" data-count="2">2<span>instances</span></button>
+              <button class="btn btn-batch" data-count="4">4<span>instances</span></button>
+              <button class="btn btn-batch" data-count="6">6<span>instances</span></button>
+              <button class="btn btn-batch" data-count="8">8<span>instances</span></button>
+            </div>
+            <div class="field">
+              <label>Launch a specific batch ID</label>
+              <div class="row">
+                <input type="number" id="batchIdInput" min="1" max="99" placeholder="e.g. 1" />
+                <button class="btn btn-primary" id="btnLaunchBatch">Launch Batch</button>
+              </div>
+              <p class="hint" id="batchHint">Batches come from the <code>Batches</code> column in Accounts.csv.</p>
+            </div>
+            <div class="field">
+              <label>Or pick accounts manually</label>
+              <div class="ms-hint"><span class="ms-grip" aria-hidden="true">⠿</span> Drag accounts to set the order they load — they launch one at a time.</div>
+              <div class="multi-select" id="manualSelect"><!-- checkboxes injected --></div>
+              <div class="row">
+                <button class="btn btn-secondary" id="btnLaunchSelected">Launch Selected (<span id="selCount">0</span>)</button>
+                <button class="btn btn-ghost" id="btnClearSel">Clear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BATCH LOAD ORDER (v2.5) -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>↕ Batch Load Order</h3>
+            <p>Change the order a batch loads — after it's already been created.</p>
+          </div>
+          <div class="panel-body">
+            <div class="field">
+              <label>Which batch?</label>
+              <div class="row">
+                <select id="boBatch" title="Pick the batch whose order you want to change">
+                  <option value="">Loading batches…</option>
+                </select>
+                <button class="btn btn-ghost btn-sm" id="boReload" title="Re-read Accounts.csv">↻</button>
+              </div>
+              <p class="hint">Read straight from <code>Accounts.csv</code> — the same file the loader reads.</p>
+            </div>
+            <div class="bo-wrap">
+              <div class="ms-hint"><span class="ms-grip" aria-hidden="true">⠿</span> Drag to reorder. Position 1 loads first.</div>
+              <div class="bo-list" id="boList"><div class="sl-muted">Pick a batch above.</div></div>
+            </div>
+            <div class="row bo-actions">
+              <button class="btn btn-primary" id="boSave" disabled>Save order</button>
+              <button class="btn btn-ghost" id="boReset" disabled>Reset</button>
+              <span class="bo-status" id="boStatus"></span>
+            </div>
+            <p class="hint bo-note">The loader walks Accounts.csv top-to-bottom, so this rewrites the row order for that batch. Accounts shared with another batch keep the same relative order there too.</p>
+          </div>
+        </div>
+
+        <!-- DANGER ZONE -->
+        <div class="panel panel-danger">
+          <div class="panel-head">
+            <h3>☠ Close Instances</h3>
+            <p>Uses the loader's <code>-close</code> parameter.</p>
+          </div>
+          <div class="panel-body">
+            <div class="field">
+              <label>Close a single account by ID</label>
+              <div class="row">
+                <input type="number" id="closeIdInput" min="1" max="99" placeholder="Account ID" />
+                <button class="btn btn-danger" id="btnCloseOne">Close</button>
+              </div>
+            </div>
+            <button class="btn btn-danger btn-block" id="btnCloseAll">☠ Force Close All Instances</button>
+          </div>
+        </div>
+
+        <!-- STATUS -->
+        <div class="panel" id="livePanel">
+          <div class="panel-head">
+            <h3>🌍 Live Status</h3>
+            <p>Live Terror Zone &amp; DClone status — straight from D2Emu.com.</p>
+          </div>
+          <div class="panel-body">
+            <div class="live-toolbar">
+              <div class="seg" id="liveRegionSeg">
+                <button class="seg-btn active" data-live-region="us">US</button>
+                <button class="seg-btn" data-live-region="eu">EU</button>
+                <button class="seg-btn" data-live-region="kr">KR</button>
+                <button class="seg-btn" data-live-region="cn">CN</button>
+              </div>
+              <div class="live-updated">
+                <span id="liveUpdated">—</span>
+                <button class="btn btn-ghost btn-sm" id="btnLiveRefresh" title="Refresh live data">⟳</button>
+              </div>
+            </div>
+
+            <div class="status-block" id="tzBlock">
+              <div class="status-title">🔥 Terror Zone <span class="status-live" id="tzLive"></span></div>
+              <div class="tz-cols">
+                <div class="tz-col">
+                  <div class="tz-col-head">Now</div>
+                  <div class="tz-areas" id="tzCurrent">—</div>
+                  <div class="tz-meta" id="tzCurrentMeta"></div>
+                </div>
+                <div class="tz-col">
+                  <div class="tz-col-head">Next <span class="tz-next-in" id="tzNextIn"></span></div>
+                  <div class="tz-areas" id="tzNext">—</div>
+                  <div class="tz-meta" id="tzNextMeta"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="status-block" id="dcloneBlock">
+              <div class="status-title">👹 DClone Status <span class="status-region" id="dcloneRegionLabel">US</span></div>
+              <div class="dclone-list" id="dcloneList">—</div>
+              <div class="status-sub">Source: <span id="dcloneSource">D2Emu.com</span></div>
+            </div>
+
+            <div class="live-error" id="liveError" hidden></div>
+            <a class="btn btn-ghost btn-block" href="https://d2emu.com/tz" target="_blank" rel="noopener">Open d2emu.com ↗</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ VIEW: CONFIG ============ -->
+    <section class="view" id="view-config">
+      <!-- Loader & Bridge settings (v1.2+) -->
+      <div class="cfg-group bridge-cfg" id="bridgeCfgCard">
+        <div class="cfg-group-head">
+          <h3>🔌 Loader &amp; Bridge</h3>
+          <p>Tell the bridge where Shupershuff's <code>D2Loader.ps1</code> lives. Once set, the Launch buttons run it directly.</p>
+        </div>
+        <div class="cfg-rows">
+          <div class="cfg-row">
+            <div class="cfg-info">
+              <div class="cfg-name">D2Loader.ps1 path</div>
+              <div class="cfg-desc">Full path to the loader script — usually inside your <code>Diablo2RLoader</code> folder.</div>
+            </div>
+            <div class="cfg-control path-control">
+              <input type="text" id="cfgScriptPath" placeholder="C:\Users\you\Desktop\Diablo2RLoader\D2Loader.ps1" spellcheck="false" autocomplete="off" />
+              <button class="btn btn-secondary btn-sm" id="btnBrowseScript" title="Browse for D2Loader.ps1">📁 Browse</button>
+            </div>
+          </div>
+          <div class="cfg-row">
+            <div class="cfg-info">
+              <div class="cfg-name">Accounts.csv path <span class="opt">optional</span></div>
+              <div class="cfg-desc">Leave blank to auto-detect it next to <code>D2Loader.ps1</code>.</div>
+            </div>
+            <div class="cfg-control path-control">
+              <input type="text" id="cfgCsvPath" placeholder="(auto-detect next to D2Loader.ps1)" spellcheck="false" autocomplete="off" />
+              <button class="btn btn-secondary btn-sm" id="btnBrowseCsv" title="Browse for Accounts.csv">📁 Browse</button>
+            </div>
+          </div>
+          <div class="cfg-row">
+            <div class="cfg-info">
+              <div class="cfg-name">Run loader in background <span class="opt">recommended</span></div>
+              <div class="cfg-desc">Launch the loader with a hidden window so it doesn't flash open every time you click Launch. Turn off to watch the loader's own window.</div>
+            </div>
+            <div class="cfg-control">
+              <label class="bg-toggle"><input type="checkbox" id="cfgHideLoaderWindow" checked /><span class="bg-track"></span><span class="bg-label">Hidden (background)</span></label>
+            </div>
+          </div>
+          <div class="cfg-row bridge-actions-row">
+            <div class="cfg-info">
+              <div class="cfg-name">Status</div>
+              <div class="cfg-desc" id="bridgeCfgStatus">Checking…</div>
+            </div>
+            <div class="cfg-control bridge-btn-row">
+              <button class="btn btn-secondary" id="btnTestLoader" title="Check that D2Loader.ps1 is valid — does not launch the game">🧪 Test loader</button>
+              <button class="btn btn-gold" id="btnSaveBridgeCfg">💾 Save paths</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="config-toolbar">
+        <p class="hint">These write straight to <code>config.xml</code>. No XML editing required.</p>
+        <button class="btn btn-primary" id="btnExportConfig">⬇ Export config.xml</button>
+      </div>
+      <div class="config-groups" id="configGroups"><!-- groups injected --></div>
+    </section>
+
+    <!-- ============ VIEW: ACCOUNTS ============ -->
+    <section class="view" id="view-accounts">
+      <div class="config-toolbar">
+        <p class="hint">Add &amp; edit accounts — this writes to <code>Accounts.csv</code>. Passwords stay in the loader's own encrypted format.</p>
+        <div class="row">
+          <button class="btn btn-gold" id="btnGetTokenTop">🔑 Get Token</button>
+          <button class="btn btn-secondary" id="btnAddAccount">＋ Add Account</button>
+          <button class="btn btn-primary" id="btnExportAccounts">⬇ Export Accounts.csv</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="acct-table" id="acctTable">
+          <thead>
+            <tr>
+              <th>ID</th><th>Battle.net Email</th><th class="th-label">Label</th><th>Batches</th>
+              <th>Auth</th><th class="th-pw">Password</th><th>Token</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="acctTableBody"><!-- rows injected --></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ VIEW: CONSOLE ============ -->
+    <section class="view" id="view-console">
+      <div class="config-toolbar">
+        <p class="hint">Every action builds the exact command Shupershuff's script expects. Copy it, or let the local bridge run it.</p>
+        <button class="btn btn-ghost" id="btnClearLog">Clear Log</button>
+      </div>
+      <div class="console" id="console">
+        <div class="console-line muted">// Command log — launch actions appear here.</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===================== TOASTS ===================== -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ===================== IMPORT MODAL ===================== -->
+<div class="modal-overlay" id="importModal" hidden>
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Import Loader Files</h3>
+      <button class="modal-x" id="importClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="hint">Drop in your real <code>config.xml</code> and <code>Accounts.csv</code> from your Diablo2RLoader folder. Nothing leaves your machine.</p>
+      <label class="dropzone" id="dropConfig">
+        <input type="file" id="fileConfig" accept=".xml" hidden />
+        <span class="dz-ico">📄</span>
+        <span class="dz-text">config.xml <em id="dzConfigName">— click or drop</em></span>
+      </label>
+      <label class="dropzone" id="dropAccounts">
+        <input type="file" id="fileAccounts" accept=".csv,.txt" hidden />
+        <span class="dz-ico">📊</span>
+        <span class="dz-text">Accounts.csv <em id="dzAccountsName">— click or drop</em></span>
+      </label>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="importCancel">Cancel</button>
+      <button class="btn btn-primary" id="importApply" disabled>Apply Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== EXPORT MODAL ===================== -->
+<div class="modal-overlay" id="exportModal" hidden>
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Export Loader Files</h3>
+      <button class="modal-x" id="exportClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="hint">Download the updated files and drop them back into your Diablo2RLoader folder (replace the originals).</p>
+      <div class="row">
+        <button class="btn btn-primary btn-block" id="dlConfig">⬇ config.xml</button>
+        <button class="btn btn-primary btn-block" id="dlAccounts">⬇ Accounts.csv</button>
+      </div>
+      <button class="btn btn-secondary btn-block" id="dlBoth">⬇ Download Both</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== GET TOKEN MODAL ===================== -->
+<div class="modal-overlay" id="tokenModal" hidden>
+  <div class="modal modal-token">
+    <div class="modal-head">
+      <h3>🔑 Get Battle.net Token</h3>
+      <button class="modal-x" id="tokenClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="hint">Signs in to Battle.net for you and captures the auth token from the
+        <code>localhost:0/?ST=…</code> redirect, then writes it into <code>Accounts.csv</code> in the
+        loader's own encrypted format. Your password is only sent to Battle.net.</p>
+
+      <div class="field">
+        <label>Account</label>
+        <select id="tokenAccount"></select>
+      </div>
+      <div class="field">
+        <label>Battle.net Email</label>
+        <input type="text" id="tokenEmail" placeholder="you@example.com" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="tokenPassword" placeholder="Battle.net password" autocomplete="off" />
+        <label class="check"><input type="checkbox" id="tokenUseSaved" /> Use the password already stored in Accounts.csv</label>
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label>Realm / Region</label>
+          <select id="tokenRegion">
+            <option value="na">Americas (US)</option>
+            <option value="eu">Europe (EU)</option>
+            <option value="kr">Asia (KR)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Mode</label>
+          <select id="tokenMode">
+            <option value="headless">Headless (recommended)</option>
+            <option value="visible">Show browser window</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="check"><input type="checkbox" id="tokenEncrypt" checked /> Encrypt token (DPAPI — matches the loader)</label>
+      <label class="check"><input type="checkbox" id="tokenSetAuth" checked /> Set this account's AuthenticationMethod to “Token”</label>
+
+      <div class="token-progress" id="tokenProgress" hidden>
+        <div class="tp-spinner"></div>
+        <div class="tp-log" id="tokenLog"></div>
+      </div>
+
+      <div class="token-result" id="tokenResult" hidden></div>
+
+      <details class="token-manual">
+        <summary>Or paste the token / redirect URL manually</summary>
+        <div class="field">
+          <input type="text" id="tokenManual" placeholder="http://localhost:0/?ST=US-…&flowTrackingId=" autocomplete="off" />
+        </div>
+        <button class="btn btn-secondary" id="btnTokenManual">Use pasted token</button>
+      </details>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="tokenCancel">Close</button>
+      <button class="btn btn-gold" id="btnGetToken">🔑 Get Token</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
