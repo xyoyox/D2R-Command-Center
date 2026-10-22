@@ -1,11 +1,25 @@
 D2R Command Center
 ==================
 
-Installed version: 2.6
+Installed version: 2.7
 
 You can also see the live version inside the app:
-the sidebar footer shows "UI v2.6" and "Bridge v2.6".
+the sidebar footer shows "UI v2.7" and "Bridge v2.7".
 If those do not match, run Update-D2R-Command-Center.bat.
+
+What's new in 2.7
+-----------------
+- REVERSED: on "Launch & Presets", Batch Launch is back on top and
+  Presets sits under it, then Batch Load Order. (This simply undoes the
+  swap from 2.6 - whichever order you like better, it is one line to
+  change.)
+- ADDED: a "Show emails / Hide emails" button on the Accounts page.
+  Account emails are MASKED by default (j*******@g****.com) so you can
+  never accidentally flash a real email address on stream. Click the
+  button to reveal every email, or click the little eye on a single row
+  to reveal just that one. The setting is remembered between sessions.
+- Everything from 2.6 is still here (sidebar live status position,
+  full-width credit pill, uniform Configuration cards).
 
 What's new in 2.6
 -----------------
@@ -21,7 +35,7 @@ What's new in 2.6
   no longer leave big uneven gaps. The cards now pack tightly into two
   balanced columns, so every card lines up uniformly.
 
-Folder layout (2.6)
+Folder layout (2.7)
 -------------------
   app\        the actual program (server.js, app.js, index.html, ...)
   scripts\    helper scripts (PowerShell + VBS) the .bat files call
@@ -32,6 +46,8 @@ Folder layout (2.6)
 
 Carried over
 ------------
+- 2.6: sidebar live status moved under Command Log, full-width credit
+       pill, Presets reordered, uniform Configuration cards.
 - 2.5: desktop icon no longer needs 3-4 clicks, shortcut replaced on
        update, Batch Load Order panel, full GitHub write-up.
 - 2.4: fixed game launching, drag & drop manual launch order, window size

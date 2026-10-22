@@ -115,6 +115,8 @@ const state = {
   bridgeInfo: null,    // last /api/ping payload (paths + status)
   scriptPath: "D2Loader.ps1",
   showEmails: false,   // privacy: hide account emails on the Instances screen by default
+  showAcctEmails: false, // privacy: hide emails in the Accounts table by default
+  acctReveal: new Set(), // row indexes revealed one-by-one in the Accounts table
   sidebarCollapsed: false,
   accountRegions: {},  // per-account region override: { "1": "2", ... } keyed by account ID
   liveRegion: "us",    // live-status region (default US / Americas)
@@ -827,12 +829,33 @@ function tokenBadge(tok) {
   return '<span class="tok-badge plain">⚠ plain</span>';
 }
 
+/* Mask an email so it is still recognisable but not readable on stream.
+   "john.doe@gmail.com" -> "j\u2022\u2022\u2022@\u2022\u2022\u2022.com" */
+function maskEmail(v) {
+  const s = String(v == null ? "" : v).trim();
+  if (!s) return "";
+  const at = s.indexOf("@");
+  if (at < 1) return s.slice(0, 1) + "\u2022".repeat(Math.max(3, s.length - 1));
+  const user = s.slice(0, at);
+  const dom = s.slice(at + 1);
+  const dot = dom.lastIndexOf(".");
+  const dname = dot > 0 ? dom.slice(0, dot) : dom;
+  const tld = dot > 0 ? dom.slice(dot) : "";
+  const bullets = (n) => "\u2022".repeat(Math.max(2, n));
+  return user.slice(0, 1) + bullets(user.length - 1) + "@" + dname.slice(0, 1) + bullets(dname.length - 1) + tld;
+}
+
 function renderAccountsTable() {
   const body = $("#acctTableBody");
-  body.innerHTML = state.accounts.map((a, i) => `
+  body.innerHTML = state.accounts.map((a, i) => {
+    const revealed = state.showAcctEmails || state.acctReveal.has(i);
+    const emailCell = revealed
+      ? `<input type="text" data-f="Acct" value="${esc(a.Acct)}" />`
+      : `<div class="email-masked" title="Email hidden \u2014 click the eye to reveal just this one"><span class="em-mask">${esc(maskEmail(a.Acct)) || "\u2014"}</span><button type="button" class="em-reveal" data-reveal-email="${i}" title="Reveal this email" aria-label="Reveal this email">\ud83d\udc41</button></div>`;
+    return `
     <tr data-row="${i}">
       <td class="col-id"><input type="text" data-f="ID" value="${esc(a.ID)}" /></td>
-      <td class="col-email"><input type="text" data-f="Acct" value="${esc(a.Acct)}" /></td>
+      <td class="col-email">${emailCell}</td>
       <td class="col-label"><input type="text" data-f="AccountLabel" value="${esc(a.AccountLabel)}" class="label-input" /></td>
       <td class="col-batches"><input type="text" data-f="Batches" value="${esc(a.Batches)}" /></td>
       <td>
@@ -848,10 +871,16 @@ function renderAccountsTable() {
       </td>
       <td class="col-token">${tokenBadge(a.Token)}</td>
       <td class="col-actions">
-        <button class="btn btn-gold btn-sm" data-get-token="${i}" title="Get Battle.net token">🔑</button>
-        <button class="btn btn-danger btn-sm" data-del-row="${i}" title="Remove">✕</button>
+        <button class="btn btn-gold btn-sm" data-get-token="${i}" title="Get Battle.net token">\ud83d\udd11</button>
+        <button class="btn btn-danger btn-sm" data-del-row="${i}" title="Remove">\u2715</button>
       </td>
-    </tr>`).join("");
+    </tr>`;
+  }).join("");
+
+  $$("[data-reveal-email]", body).forEach((b) => b.addEventListener("click", () => {
+    state.acctReveal.add(+b.dataset.revealEmail);
+    renderAccountsTable();
+  }));
 
   $$("[data-row] input, [data-row] select", body).forEach((el) => {
     el.addEventListener("change", () => {
@@ -888,6 +917,7 @@ const LS = {
   presets: "d2rcc.presets",
   region: "d2rcc.region",
   showEmails: "d2rcc.showEmails",
+  showAcctEmails: "d2rcc.showAcctEmails",
   sidebar: "d2rcc.sidebarCollapsed",
   accountRegions: "d2rcc.accountRegions",
   liveRegion: "d2rcc.liveRegion",
@@ -899,6 +929,7 @@ function saveRegion() { try { localStorage.setItem(LS.region, state.region); } c
 function savePrefs() {
   try {
     localStorage.setItem(LS.showEmails, state.showEmails ? "1" : "0");
+    localStorage.setItem(LS.showAcctEmails, state.showAcctEmails ? "1" : "0");
     localStorage.setItem(LS.sidebar, state.sidebarCollapsed ? "1" : "0");
   } catch (e) {}
 }
@@ -914,6 +945,7 @@ function loadFromLocalStorage() {
     const p = localStorage.getItem(LS.presets); if (p) state.presets = JSON.parse(p);
     const r = localStorage.getItem(LS.region); if (r) state.region = r;
     state.showEmails = localStorage.getItem(LS.showEmails) === "1";
+    state.showAcctEmails = localStorage.getItem(LS.showAcctEmails) === "1";
     state.sidebarCollapsed = localStorage.getItem(LS.sidebar) === "1";
     const ar = localStorage.getItem(LS.accountRegions); if (ar) state.accountRegions = JSON.parse(ar) || {};
     const lr = localStorage.getItem(LS.liveRegion); if (lr && LIVE_REGION_LABEL[lr]) state.liveRegion = lr;
@@ -956,7 +988,7 @@ async function detectBridge() {
   }
 }
 
-const UI_VERSION = "2.6";
+const UI_VERSION = "2.7";
 
 function updateVersionBadges() {
   const ui = $("#uiVersion"), br = $("#bridgeVersion");
@@ -1527,6 +1559,26 @@ function toggleEmails() {
   toast(state.showEmails ? "Showing account emails" : "Hiding account emails", "ok", state.showEmails ? "👁" : "👁");
 }
 
+function applyAcctEmailToggle() {
+  const btn = $("#btnAcctEmails");
+  if (!btn) return;
+  btn.classList.toggle("on", !!state.showAcctEmails);
+  btn.setAttribute("aria-pressed", state.showAcctEmails ? "true" : "false");
+  const lbl = $("#acctEmailsLbl");
+  if (lbl) lbl.textContent = state.showAcctEmails ? "Hide emails" : "Show emails";
+  const ico = $("#acctEmailsIco");
+  if (ico) ico.textContent = state.showAcctEmails ? "\ud83d\ude48" : "\ud83d\udc41";
+}
+
+function toggleAcctEmails() {
+  state.showAcctEmails = !state.showAcctEmails;
+  if (!state.showAcctEmails) state.acctReveal.clear();
+  savePrefs();
+  applyAcctEmailToggle();
+  renderAccountsTable();
+  toast(state.showAcctEmails ? "Showing account emails" : "Account emails hidden", "ok", "\ud83d\udc41");
+}
+
 async function testLoader() {
   if (!state.bridgeOnline) { toast("Bridge offline", "err"); return; }
   const btn = $("#btnTestLoader");
@@ -1552,9 +1604,11 @@ async function testLoader() {
 function bindV14() {
   const t = $("#sidebarToggle"); if (t) t.addEventListener("click", toggleSidebar);
   const e = $("#btnToggleEmails"); if (e) e.addEventListener("click", toggleEmails);
+  const ae = $("#btnAcctEmails"); if (ae) ae.addEventListener("click", toggleAcctEmails);
   const tl = $("#btnTestLoader"); if (tl) tl.addEventListener("click", testLoader);
   applySidebarState();
   applyEmailToggle();
+  applyAcctEmailToggle();
 }
 
 /* ---- "Rp_Casanova" socials drop-down in the sidebar brand ---- */

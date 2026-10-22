@@ -1,6 +1,6 @@
 {
   "name": "d2r-command-center-bridge",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "private": true,
   "description": "Local bridge for the D2R Command Center: runs D2Loader.ps1 and automates Battle.net token acquisition.",
   "main": "server.js",

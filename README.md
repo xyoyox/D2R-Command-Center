@@ -297,8 +297,8 @@ it, replace program files, **keep** your `bridge.config.json` and `data\`,
 replace files. Your `bridge.config.json` and `data\` are not in the zip, so they
 survive.
 
-After updating, check the sidebar footer: it should read **`UI v2.6`** and
-**`Bridge v2.6`**. If the numbers disagree, the update didn't finish — run the
+After updating, check the sidebar footer: it should read **`UI v2.7`** and
+**`Bridge v2.7`**. If the numbers disagree, the update didn't finish — run the
 updater again.
 
 ---

@@ -116,7 +116,7 @@ you.
 3. It finds your existing install, **stops** it, **removes the old files**,
    **copies the new ones in**, keeps your `bridge.config.json` + `data\`, and
    **restarts** the app. It never touches `D2Loader.ps1`.
-4. Confirm: the **sidebar footer** shows **`UI v2.6`** and **`Bridge v2.6`**.
+4. Confirm: the **sidebar footer** shows **`UI v2.7`** and **`Bridge v2.7`**.
 
 **Option B — flat overwrite:**
 
@@ -233,7 +233,7 @@ files you actually need, and everything else lives in sub-folders.
 ```
 d2r-command-center/
 ├─ README.txt                    ← START HERE — simple end-user quick-start
-├─ VERSION.txt                   ← the installed version (2.6)
+├─ VERSION.txt                   ← the installed version (2.7)
 ├─ Install-D2R-Command-Center.bat  ← ONE-CLICK setup (Node + deps + loader + icon + launch)
 ├─ Update-D2R-Command-Center.bat ← ONE-CLICK update of an existing install (removes old files)
 ├─ Create-Desktop-Shortcut.bat   ← (re)create the Desktop shortcut
@@ -324,6 +324,19 @@ wrong, that log will say so — the most common causes are:
 ---
 
 ## Changelog
+
+### v2.7
+
+- **Launch & Presets order reversed.** Batch Launch is back at the top of the
+  panel grid, followed by Presets, then Batch Load Order. This undoes the 2.6
+  swap; the panels are independent blocks, so the order is purely presentational.
+- **Accounts email privacy.** A new **Show emails / Hide emails** button in the
+  Accounts toolbar. Emails are masked by default (`j•••••••@g••••.com`), so a
+  live stream can never accidentally expose a real Battle.net address. The
+  toolbar button reveals or hides every row at once; each row also has a small
+  eye button that reveals only that one address. The preference is stored in
+  `localStorage` under `d2rcc.showAcctEmails`, and per-row reveals are cleared
+  whenever you hide again or reload.
 
 ### v2.6
 - **Sidebar live status moved under Command Log.** The Terror Zone and DClone

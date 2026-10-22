@@ -9,6 +9,24 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioning is
 
 ---
 
+## [2.7] — Panel order reversed, account emails hidden by default
+
+### Changed
+- **Batch Launch is back on top.** On *Launch & Presets* the panel grid now reads
+  Batch Launch → Presets → Batch Load Order. This simply reverses the 2.6 swap.
+
+### Added
+- **Accounts email privacy toggle.** A **Show emails / Hide emails** button in the
+  Accounts toolbar. Emails are masked by default (`j•••••••@g••••.com`),
+  so a real Battle.net address can never be flashed on stream by accident. The
+  toolbar button reveals/hides every row; a per-row eye button reveals a single
+  address. The choice persists in `localStorage` (`d2rcc.showAcctEmails`).
+
+### Unchanged
+- `D2Loader.ps1` is still byte-for-byte Shupershuff's. No loader files touched.
+
+---
+
 ## [2.6] — Sidebar live placement, full-width credit, uniform config cards
 
 ### Changed

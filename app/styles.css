@@ -1060,3 +1060,19 @@ input::placeholder { color: var(--text-faint); }
 /* Sidebar live block sits directly under the nav (Command Log) and
    expands downward instead of being pushed to the bottom. */
 .side-live { flex: 0 0 auto; }
+
+/* ---------- accounts email privacy (v2.7) ---------- */
+.email-masked { display: flex; align-items: center; gap: 6px; }
+.email-masked .em-mask {
+  font-family: var(--font-mono, ui-monospace, "Consolas", monospace);
+  font-size: 12.5px; letter-spacing: .5px; color: var(--text-faint, #6d655a);
+  background: rgba(255,255,255,.03); border: 1px dashed var(--border-soft);
+  border-radius: 5px; padding: 4px 8px; min-width: 170px; user-select: none;
+}
+.email-masked .em-reveal {
+  flex: none; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--border-soft); border-radius: 5px;
+  color: var(--text-faint, #6d655a); font-size: 11px; cursor: pointer; transition: all .14s;
+}
+.email-masked .em-reveal:hover { border-color: var(--gold-dim); color: var(--gold-bright); background: rgba(201,162,39,.1); }
+#btnAcctEmails.on { border-color: rgba(201,162,39,.5); background: rgba(201,162,39,.16); color: var(--gold-bright); }

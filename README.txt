@@ -1,7 +1,7 @@
 ============================================================
   D2R COMMAND CENTER  -  START HERE
   A friendly point-and-click UI for Shupershuff's D2R Loader
-  (v2.6)
+  (v2.7)
 ============================================================
 
 This little app gives Shupershuff's Diablo 2 Resurrected loader a
@@ -10,7 +10,19 @@ HIS loader exactly as-is - it never changes his files.
 
 
 ------------------------------------------------------------
-  WHAT'S NEW IN 2.6  (quick list)
+  WHAT'S NEW IN 2.7  (quick list)
+------------------------------------------------------------
+
+  * "Launch & Presets" order reversed: Batch Launch is on top again,
+    then Presets, then Batch Load Order.
+
+  * NEW privacy button on the Accounts page: "Show emails / Hide
+    emails". Emails are hidden by default and shown as j*******@g****.com
+    so you cannot accidentally show a real address on stream. Reveal all
+    with one click, or reveal a single row with the little eye.
+
+------------------------------------------------------------
+  WHAT WAS NEW IN 2.6
 ------------------------------------------------------------
 
   * The Terror Zone and DClone live status now sit right under the
@@ -241,7 +253,7 @@ HIS loader exactly as-is - it never changes his files.
      It never touches Shupershuff's D2Loader.ps1.
 
   To confirm the update worked, look at the bottom of the app's
-  left sidebar - it should read "UI v2.6" and "Bridge v2.6".
+  left sidebar - it should read "UI v2.7" and "Bridge v2.7".
   (You can also open VERSION.txt in this folder.)
 
   If the browser still shows the old look, press Ctrl+F5 once.

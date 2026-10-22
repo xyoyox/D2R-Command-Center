@@ -55,7 +55,7 @@ needs to launch the game.
 
 ### 4. First launch checklist
 
-- Sidebar footer shows **`UI v2.6`** and **`Bridge v2.6`**.
+- Sidebar footer shows **`UI v2.7`** and **`Bridge v2.7`**.
 - Bridge chip is green: **Bridge online** (or **Bridge online · token ready**).
 - **Instances** shows your accounts from `Accounts.csv`.
 - Configuration → Loader & Bridge shows the correct `D2Loader.ps1` path.

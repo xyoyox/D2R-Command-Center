@@ -13,7 +13,7 @@ Everything below is a one-time setup.
 ```
 github\
 ├─ README.md              ← the repo front page (badges, screenshots, features)
-├─ CHANGELOG.md           ← version history, 1.0 → 2.6
+├─ CHANGELOG.md           ← version history, 1.0 → 2.7
 ├─ CONTRIBUTING.md        ← rules (incl. "never modify D2Loader.ps1")
 ├─ SECURITY.md            ← disclosure policy + security posture
 ├─ LICENSE                ← MIT (this project only; his loader is his)
@@ -86,7 +86,7 @@ del d2r-cc-repo\app\package-lock.json
 cd d2r-cc-repo
 git init
 git add .
-git commit -m "D2R Command Center v2.6 - companion UI for Shupershuff's D2R Loader"
+git commit -m "D2R Command Center v2.7 - companion UI for Shupershuff's D2R Loader"
 git branch -M main
 git remote add origin https://github.com/xyoyox/D2R-Command-Center.git
 git push -u origin main
@@ -106,9 +106,9 @@ git push -u origin main
 **Releases:**
 
 1. Releases → *Draft a new release*.
-2. Tag `v2.6`, title `v2.6 — Sidebar live placement, full-width credit, uniform config cards`.
-3. Paste the `## [2.6]` section from `CHANGELOG.md`.
-4. Attach `D2R-Command-Center-v2.6.zip` (the **Core** zip, without `github\`).
+2. Tag `v2.7`, title `v2.7 — Panel order reversed, account emails hidden by default`.
+3. Paste the `## [2.7]` section from `CHANGELOG.md`.
+4. Attach `D2R-Command-Center-v2.7.zip` (the **Core** zip, without `github\`).
 5. Publish.
 
 **Social preview:** Settings → General → Social preview → upload

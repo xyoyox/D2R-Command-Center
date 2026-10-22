@@ -122,7 +122,7 @@
         Engine by <a href="https://github.com/shupershuff/Diablo2RLoader" target="_blank" rel="noopener">Shupershuff</a>
       </div>
       <div class="ver-line" title="UI version and the bridge version it's talking to">
-        <span class="ver-badge" id="uiVersion">UI v2.6</span>
+        <span class="ver-badge" id="uiVersion">UI v2.7</span>
         <span class="ver-badge" id="bridgeVersion">Bridge —</span>
       </div>
     </div>
@@ -206,26 +206,6 @@
     <section class="view" id="view-launch">
       <div class="panel-grid">
 
-        <!-- PRESETS -->
-        <div class="panel">
-          <div class="panel-head">
-            <h3>💾 Presets</h3>
-            <p>Save a realm + account set, reuse it forever.</p>
-          </div>
-          <div class="panel-body">
-            <div class="field">
-              <label>New preset name</label>
-              <div class="row">
-                <input type="text" id="presetName" placeholder="e.g. Baal Runs (4)" />
-                <button class="btn btn-primary" id="btnSavePreset">Save Current</button>
-              </div>
-              <p class="hint">Saves the current realm, selected accounts &amp; batch ID.</p>
-            </div>
-            <div class="preset-list" id="presetList"><!-- presets injected --></div>
-          </div>
-        </div>
-
-
         <!-- BATCH -->
         <div class="panel">
           <div class="panel-head">
@@ -258,6 +238,26 @@
             </div>
           </div>
         </div>
+
+        <!-- PRESETS -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>💾 Presets</h3>
+            <p>Save a realm + account set, reuse it forever.</p>
+          </div>
+          <div class="panel-body">
+            <div class="field">
+              <label>New preset name</label>
+              <div class="row">
+                <input type="text" id="presetName" placeholder="e.g. Baal Runs (4)" />
+                <button class="btn btn-primary" id="btnSavePreset">Save Current</button>
+              </div>
+              <p class="hint">Saves the current realm, selected accounts &amp; batch ID.</p>
+            </div>
+            <div class="preset-list" id="presetList"><!-- presets injected --></div>
+          </div>
+        </div>
+
 
         <!-- BATCH LOAD ORDER (v2.5) -->
         <div class="panel">
@@ -419,6 +419,9 @@
       <div class="config-toolbar">
         <p class="hint">Add &amp; edit accounts — this writes to <code>Accounts.csv</code>. Passwords stay in the loader's own encrypted format.</p>
         <div class="row">
+          <button class="btn btn-ghost" id="btnAcctEmails" aria-pressed="false" title="Emails are hidden by default so you cannot accidentally show them on stream">
+            <span class="ico" id="acctEmailsIco">👁</span><span id="acctEmailsLbl">Show emails</span>
+          </button>
           <button class="btn btn-gold" id="btnGetTokenTop">🔑 Get Token</button>
           <button class="btn btn-secondary" id="btnAddAccount">＋ Add Account</button>
           <button class="btn btn-primary" id="btnExportAccounts">⬇ Export Accounts.csv</button>

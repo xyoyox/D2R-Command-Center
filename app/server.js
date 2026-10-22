@@ -33,7 +33,7 @@ const ROOT = path.resolve(__dirname, ".");          // app/  (web files live her
 const BASE = path.resolve(__dirname, "..");         // install root (assets/, data/, scripts/)
 const PORT = process.env.PORT || 8787;
 const CONFIG_FILE = path.join(BASE, "bridge.config.json");
-const VERSION = "2.6";
+const VERSION = "2.7";
 
 /* ---- background / headless mode ----
    --no-browser (or D2R_NO_BROWSER=1) => never open a browser window.
